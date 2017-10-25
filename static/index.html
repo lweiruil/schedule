@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>日程表</title>
+    <!--<link href=favicon.ico rel=icon type=image/x-icon>-->
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+    <!--<link rel="stylesheet" href="css/bootstrap.min.css">-->
+    <script src="js/axios.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+        html,body{
+            margin: 0;
+            padding: 0;
+        }
+        #app{
+            margin: 10px;
+        }
+        ol{
+            padding-left: 10px;
+        }
+        .switch_btn{
+            width: 100%;
+            margin-top: 30px;
+        }
+        .content{
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1 style="text-align:center">{{title}}</h1>
+        <div id="show" class="content" v-if="show">
+            <div style="margin: 20px 0;">
+                <!--<el-form ref="form" label-width="100px">
+                    <el-form-item label="需要查看的周">
+                        <el-date-picker
+                                :clearable="false"
+                                :editable="false"
+                                v-model="week"
+                                type="week"
+                                :picker-options="pickerOptions"
+                                format="yyyy-MM-dd"
+                                @change="pickerWeek"
+                                placeholder="选择周">
+                        </el-date-picker>
+                    </el-form-item>
+                    <el-form-item label="单个/多个展开">
+                        <el-radio-group v-model="accordion">
+                            <el-radio-button :label="true">单个展开</el-radio-button>
+                            <el-radio-button :label="false">多个展开</el-radio-button>
+                        </el-radio-group>
+                    </el-form-item>
+                </el-form>-->
+                <el-date-picker
+                        :clearable="false"
+                        :editable="false"
+                        v-model="week"
+                        type="week"
+                        :picker-options="pickerOptions"
+                        format="yyyy-MM-dd"
+                        @change="pickerWeek"
+                        placeholder="选择周">
+                </el-date-picker>
+                <el-radio-group v-model="accordion">
+                    <el-radio-button :label="true">单</el-radio-button>
+                    <el-radio-button :label="false">多</el-radio-button>
+                </el-radio-group>
+            </div>
+            <!--显示结果列表-->
+            <el-collapse v-model="activeName" :accordion="accordion">
+                <el-collapse-item v-for="(item, $index) in weekData" :title="item.title + '（' + item.date + '）'" :name="$index + 1">
+                    <ol>
+                        <li v-for="event in item.eventList">
+                            <p v-if="event.startTime">开始时间：{{ event.startTime }}</p>
+                            <p v-if="event.endTime">结束时间：{{ event.endTime }}</p>
+                            <p v-if="event.content">事件：{{ event.content }}</p>
+                            <p v-if="event.address">地点：{{ event.address }}</p>
+                            <p v-if="event.people">执行者：{{ event.people }}</p>
+                        </li>
+                    </ol>
+                </el-collapse-item>
+            </el-collapse>
+        </div><!--show end-->
+        <div id="add" class="content" v-else>
+            <el-form ref="form" :model="form" :rules="rules" label-width="60px">
+                <el-form-item prop="startDateTime" label="时 间">
+                    <!--<el-input v-model="form.dateTime" placeholder="时间"></el-input>-->
+                    <el-date-picker :clearable="false" :editable="false" v-model="form.startDateTime" type="datetime" placeholder="选择开始日期">
+                    </el-date-picker>
+                </el-form-item>
+                <el-form-item prop="endDateTime" label="时 间">
+                    <!--<el-input v-model="form.dateTime" placeholder="时间"></el-input>-->
+                    <el-date-picker :clearable="false" :editable="false" v-model="form.endDateTime" type="datetime" placeholder="选择结束日期">
+                    </el-date-picker>
+                </el-form-item>
+                <el-form-item prop="event" label="事 件">
+                    <el-input v-model="form.event" placeholder="事件"></el-input>
+                </el-form-item>
+                <el-form-item prop="address" label="地 点">
+                    <el-input v-model="form.address" placeholder="地点"></el-input>
+                </el-form-item>
+                <el-form-item prop="people" label="执行人">
+                    <el-input v-model="form.people" placeholder="执行人"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="show = true">显示列表</el-button>
+                    <el-button type="success" @click="onSubmit">立即创建</el-button>
+                    <!--<el-button type="success" @click="resetFrom">重置</el-button>-->
+                </el-form-item>
+            </el-form>
+        </div><!--add end-->
+        <div v-show="show" class="switch_btn_wrapper"><el-button class="switch_btn" @click="show = false" type="primary">{{ show ? '添加' : '显示列表' }}</el-button></div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>
