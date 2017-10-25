@@ -1,6 +1,6 @@
 # schedule
 
-## mysql server
+### mysql server建表语句
 
 	CREATE TABLE `schedule` (
 	`id`  int(11) NOT NULL AUTO_INCREMENT ,
