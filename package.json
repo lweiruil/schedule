@@ -1,7 +1,7 @@
 {
   "name": "schedule",
   "version": "1.0.0",
-  "description": "schedule vue node",
+  "description": "schedule vue node mysql",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
