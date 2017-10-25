@@ -1,6 +1,6 @@
 # schedule
 
-# mysql server
+## mysql server
 
 	CREATE TABLE `schedule` (
 	`id`  int(11) NOT NULL AUTO_INCREMENT ,
@@ -29,6 +29,6 @@ index.js文件
 	    database: 'schedule'
 	});
 
-
+### 安装运行
 	npm install
 	npm run start
